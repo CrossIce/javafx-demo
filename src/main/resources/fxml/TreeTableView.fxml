@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import com.jfoenix.validation.NumberValidator?>
+<?import com.jfoenix.validation.RequiredFieldValidator?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<StackPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1"
+           xmlns="http://javafx.com/javafx/2.2">
+    <VBox maxWidth="1000" maxHeight="800" spacing="10">
+        <children>
+
+            <HBox spacing="20" style="-fx-padding: 50 0 10 0;">
+                <Label style="-fx-font-size: 12.0px;-fx-padding: 10 5 0 5">物料名称：</Label>
+                <JFXComboBox fx:id="nameField" prefWidth="150" editable="true"
+                             promptText="Select">
+                </JFXComboBox>
+                <Label style="-fx-font-size: 12.0px;-fx-padding: 10 5 0 5">物料单价：</Label>
+                <StackPane maxWidth="150">
+                    <JFXTextField fx:id="singlePrice" promptText="单价">
+                        <validators>
+                            <RequiredFieldValidator message="当前项必填">
+                                <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                            </RequiredFieldValidator>
+                        </validators>
+                    </JFXTextField>
+                </StackPane>
+                <Label style="-fx-font-size: 12.0px;-fx-padding: 10 5 0 5">物料数量：</Label>
+                <StackPane maxWidth="150">
+                    <JFXTextField fx:id="countNum" promptText="数量" prefWidth="100">
+                        <validators>
+                            <RequiredFieldValidator message="当前项必填">
+                                <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                            </RequiredFieldValidator>
+                            <NumberValidator message="当前项只能输数字">
+                                <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                            </NumberValidator>
+                        </validators>
+                    </JFXTextField>
+                </StackPane>
+                <JFXButton fx:id="treeTableViewAdd" prefWidth="50" prefHeight="20" buttonType="RAISED" text="添加"
+                           style="-fx-text-fill:WHITE;-fx-background-color:#5264AE;-fx-font-size:14px;"/>
+            </HBox>
+            <HBox spacing="20" style="-fx-padding: 10 0 20 5;">
+                <JFXTextArea fx:id="remarkField" promptText="添加备注"
+                             labelFloat="true" maxHeight="50" minWidth="600">
+                </JFXTextArea>
+            </HBox>
+            <HBox alignment="CENTER">
+                <Label styleClass="title-label">报价单列表</Label>
+                <Label styleClass="title-label" fx:id="offerTableViewCount"></Label>
+                <JFXButton fx:id="treeTableViewRemove" buttonType="FLAT" style="-fx-text-fill:red;" text="删除所选行"/>
+                <StackPane HBox.hgrow="ALWAYS">
+                    <StackPane StackPane.alignment="CENTER" maxWidth="150">
+                        <JFXTextField fx:id="searchField" promptText="搜索..."></JFXTextField>
+                    </StackPane>
+                </StackPane>
+            </HBox>
+            <JFXTreeTableView fx:id="offerTableView">
+                <columns>
+                    <JFXTreeTableColumn fx:id="nameColumn"
+                                        text="物料名称" minWidth="250" resizable="true"></JFXTreeTableColumn>
+                    <JFXTreeTableColumn fx:id="priceColumn"
+                                        text="物料单价" minWidth="100" resizable="true"></JFXTreeTableColumn>
+                    <JFXTreeTableColumn fx:id="countColumn"
+                                        text="物料数量" minWidth="100" resizable="true"></JFXTreeTableColumn>
+                    <JFXTreeTableColumn fx:id="totalPriceColumn"
+                                        text="物料总价（元）" minWidth="100" resizable="true"></JFXTreeTableColumn>
+                    <JFXTreeTableColumn fx:id="remarkColumn"
+                                        text="备注" minWidth="300" resizable="true"></JFXTreeTableColumn>
+                </columns>
+            </JFXTreeTableView>
+            <HBox alignment="BOTTOM_LEFT" style="-fx-padding: 20 0 10 10;">
+                <Label style="-fx-padding: 0 0 2 10;" styleClass="title-label">报价总金额：</Label>
+                <Label style="-fx-padding: 0 20 2 10;" styleClass="title-label" fx:id="allTotalPrice"></Label>
+                <JFXButton prefWidth="80" prefHeight="30" buttonType="RAISED" text="导出"
+                           style="-fx-text-fill:WHITE;-fx-background-color:#5264AE;-fx-font-size:14px;"/>
+            </HBox>
+
+            <HBox alignment="CENTER" style="-fx-padding: 30 0 10 10;">
+                <Label styleClass="title-label">物料单</Label>
+                <Label styleClass="title-label" fx:id="materialTableViewCount"></Label>
+                <JFXButton fx:id="materialTableViewRemove" buttonType="FLAT"  text="删除所选行" style="-fx-text-fill:red;"/>
+                <StackPane HBox.hgrow="ALWAYS">
+                    <StackPane StackPane.alignment  ="CENTER" maxWidth="150">
+                        <JFXTextField fx:id="searchField1" promptText="搜索..."></JFXTextField>
+                    </StackPane>
+                </StackPane>
+            </HBox>
+            <JFXTreeTableView fx:id="materialTableView">
+                <columns>
+                    <JFXTreeTableColumn fx:id="materialName"
+                                        text="物料选项名称" minWidth="250" resizable="true"></JFXTreeTableColumn>
+                    <JFXTreeTableColumn fx:id="materialPrice"
+                                        text="物料单价" minWidth="200" resizable="true"></JFXTreeTableColumn>
+
+                </columns>
+            </JFXTreeTableView>
+        </children>
+    </VBox>
+</StackPane>
