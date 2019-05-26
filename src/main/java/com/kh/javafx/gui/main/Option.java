@@ -13,17 +13,27 @@ public class Option implements Serializable {
     private static final long serialVersionUID = 1L;
     private String key;
     private Double value;
+    private String unit;
 
-    public Option(String key, Double value) {
+    public Option(String key, Double value, String unit) {
         this.key = key;
         this.value = value;
+        this.unit = unit;
     }
 
     public Option() {
     }
 
     public Option(TreeTableViewController.OptionFx optionFx) {
-        this(optionFx.getName(), optionFx.getPrice());
+        this(optionFx.getName(), optionFx.getPrice(), optionFx.getUnit());
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 
     public String getKey() {

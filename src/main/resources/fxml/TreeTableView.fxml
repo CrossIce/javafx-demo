@@ -7,17 +7,31 @@
 <?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<StackPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1"
+<ScrollPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1"
            xmlns="http://javafx.com/javafx/2.2">
-    <VBox maxWidth="1000" maxHeight="800" spacing="10">
+    <VBox>
         <children>
 
-            <HBox spacing="20" style="-fx-padding: 50 0 10 0;">
-                <Label style="-fx-font-size: 12.0px;-fx-padding: 10 5 0 5">物料名称：</Label>
-                <JFXComboBox fx:id="nameField" prefWidth="150" editable="true"
+            <HBox  style="-fx-padding: 50 0 10 0;">
+                <Label style="-fx-font-size: 16.0px;-fx-padding: 10 5 0 10">房间或部位：</Label>
+                <JFXComboBox fx:id="partField" prefWidth="200" editable="true"
                              promptText="Select">
                 </JFXComboBox>
-                <Label style="-fx-font-size: 12.0px;-fx-padding: 10 5 0 5">物料单价：</Label>
+                <Label style="-fx-font-size: 16.0px;-fx-padding: 10 5 0 10">工程或费用名称：</Label>
+                <JFXComboBox fx:id="nameField" prefWidth="300" editable="true"
+                             promptText="Select">
+                </JFXComboBox>
+                <Label style="-fx-font-size: 16.0px;-fx-padding: 10 5 0 10">单位：</Label>
+                <StackPane maxWidth="150">
+                    <JFXTextField fx:id="unitField" promptText="单位">
+                    </JFXTextField>
+                </StackPane>
+
+                <JFXButton fx:id="treeTableViewAdd" prefWidth="50" prefHeight="20" buttonType="RAISED" text="添加"
+                           style="-fx-text-fill:WHITE;-fx-background-color:#5264AE;-fx-font-size:14px;-fx-start-margin: 20"/>
+            </HBox>
+            <HBox  style="-fx-padding: 10 0 20 5;">
+                <Label style="-fx-font-size: 16.0px;-fx-padding: 10 5 0 10">物料单价：</Label>
                 <StackPane maxWidth="150">
                     <JFXTextField fx:id="singlePrice" promptText="单价">
                         <validators>
@@ -27,7 +41,7 @@
                         </validators>
                     </JFXTextField>
                 </StackPane>
-                <Label style="-fx-font-size: 12.0px;-fx-padding: 10 5 0 5">物料数量：</Label>
+                <Label style="-fx-font-size: 16.0px;-fx-padding: 10 5 0 10">数量：</Label>
                 <StackPane maxWidth="150">
                     <JFXTextField fx:id="countNum" promptText="数量" prefWidth="100">
                         <validators>
@@ -40,12 +54,8 @@
                         </validators>
                     </JFXTextField>
                 </StackPane>
-                <JFXButton fx:id="treeTableViewAdd" prefWidth="50" prefHeight="20" buttonType="RAISED" text="添加"
-                           style="-fx-text-fill:WHITE;-fx-background-color:#5264AE;-fx-font-size:14px;"/>
-            </HBox>
-            <HBox spacing="20" style="-fx-padding: 10 0 20 5;">
-                <JFXTextArea fx:id="remarkField" promptText="添加备注"
-                             labelFloat="true" maxHeight="50" minWidth="600">
+                <JFXTextArea fx:id="remarkField" promptText="添加备注" style="-fx-font-size:14px;-fx-padding: 10 5 0 10"
+                             labelFloat="true" maxHeight="50" minWidth="420">
                 </JFXTextArea>
             </HBox>
             <HBox alignment="CENTER">
@@ -58,24 +68,30 @@
                     </StackPane>
                 </StackPane>
             </HBox>
-            <JFXTreeTableView fx:id="offerTableView">
+            <HBox alignment="CENTER" style="-fx-padding: 30 0 10 10;">
+            <JFXTreeTableView fx:id="offerTableView" minHeight="400">
                 <columns>
+                    <JFXTreeTableColumn fx:id="partColumn"
+                                        text="房间或部位" minWidth="200" resizable="true"></JFXTreeTableColumn>
                     <JFXTreeTableColumn fx:id="nameColumn"
-                                        text="物料名称" minWidth="250" resizable="true"></JFXTreeTableColumn>
+                                        text="工程或费用名称" minWidth="300" resizable="true"></JFXTreeTableColumn>
+                    <JFXTreeTableColumn fx:id="unitColumn"
+                                        text="单位" minWidth="100" resizable="true"></JFXTreeTableColumn>
                     <JFXTreeTableColumn fx:id="priceColumn"
-                                        text="物料单价" minWidth="100" resizable="true"></JFXTreeTableColumn>
+                                        text="单价(元)" minWidth="100" resizable="true"></JFXTreeTableColumn>
                     <JFXTreeTableColumn fx:id="countColumn"
-                                        text="物料数量" minWidth="100" resizable="true"></JFXTreeTableColumn>
+                                        text="数量" minWidth="100" resizable="true"></JFXTreeTableColumn>
                     <JFXTreeTableColumn fx:id="totalPriceColumn"
-                                        text="物料总价（元）" minWidth="100" resizable="true"></JFXTreeTableColumn>
+                                        text="合价（元）" minWidth="100" resizable="true"></JFXTreeTableColumn>
                     <JFXTreeTableColumn fx:id="remarkColumn"
-                                        text="备注" minWidth="300" resizable="true"></JFXTreeTableColumn>
+                                        text="备注" minWidth="400" resizable="true"></JFXTreeTableColumn>
                 </columns>
             </JFXTreeTableView>
-            <HBox alignment="BOTTOM_LEFT" style="-fx-padding: 20 0 10 10;">
+            </HBox>
+            <HBox  style="-fx-padding: 20 0 10 10;">
                 <Label style="-fx-padding: 0 0 2 10;" styleClass="title-label">报价总金额：</Label>
                 <Label style="-fx-padding: 0 20 2 10;" styleClass="title-label" fx:id="allTotalPrice"></Label>
-                <JFXButton prefWidth="80" prefHeight="30" buttonType="RAISED" text="导出"
+                <JFXButton fx:id="excelExport" prefWidth="80" prefHeight="30" buttonType="RAISED" text="导出"
                            style="-fx-text-fill:WHITE;-fx-background-color:#5264AE;-fx-font-size:14px;"/>
             </HBox>
 
@@ -84,20 +100,27 @@
                 <Label styleClass="title-label" fx:id="materialTableViewCount"></Label>
                 <JFXButton fx:id="materialTableViewRemove" buttonType="FLAT"  text="删除所选行" style="-fx-text-fill:red;"/>
                 <StackPane HBox.hgrow="ALWAYS">
-                    <StackPane StackPane.alignment  ="CENTER" maxWidth="150">
+                    <StackPane StackPane.alignment ="CENTER_LEFT" maxWidth="150">
                         <JFXTextField fx:id="searchField1" promptText="搜索..."></JFXTextField>
                     </StackPane>
                 </StackPane>
             </HBox>
-            <JFXTreeTableView fx:id="materialTableView">
-                <columns>
-                    <JFXTreeTableColumn fx:id="materialName"
-                                        text="物料选项名称" minWidth="250" resizable="true"></JFXTreeTableColumn>
-                    <JFXTreeTableColumn fx:id="materialPrice"
-                                        text="物料单价" minWidth="200" resizable="true"></JFXTreeTableColumn>
+            <HBox alignment="BOTTOM_LEFT" style="-fx-padding: 30 0 10 10;">
+                <JFXTreeTableView fx:id="materialTableView" maxHeight="300">
+                    <columns>
+                        <JFXTreeTableColumn fx:id="materialName"
+                                            text="工程或费用名称" minWidth="300" resizable="true"></JFXTreeTableColumn>
+                        <JFXTreeTableColumn fx:id="materialPrice"
+                                            text="单价" minWidth="200" resizable="true"></JFXTreeTableColumn>
+                        <JFXTreeTableColumn fx:id="materialUnit"
+                                            text="单位" minWidth="200" resizable="true"></JFXTreeTableColumn>
 
-                </columns>
-            </JFXTreeTableView>
+
+                    </columns>
+                </JFXTreeTableView>
+            </HBox>
+
+
         </children>
     </VBox>
-</StackPane>
+</ScrollPane>

@@ -1,10 +1,38 @@
+buildscript {
+    dependencies {
+        classpath group: 'de.dynamicfiles.projects.gradle.plugins', name: 'javafx-gradle-plugin', version: '8.8.2'
+    }
+    repositories {
+        mavenLocal()
+        mavenCentral()
 
+    }
+
+}
 group 'com.kh.javafx'
 version '1.0'
 
-apply plugin: 'application'
+apply plugin: 'java'
+apply plugin: 'javafx-gradle-plugin'
+
 
 sourceCompatibility = 1.8
+
+jfx {
+    appName = "quote"
+
+    vendor= "javafx"
+    verbose = true
+    // 启动类
+    mainClass = 'com.kh.javafx.MainDemo'
+    jfxAppOutputDir = "build/jfx/app"
+    jfxMainAppJarName = "project-jfx.jar"
+    deployDir = "src/main/deploy"
+    useEnvironmentRelativeExecutables = true
+    libFolderName = "lib"
+    
+
+}
 
 repositories {
     maven { url "http://maven.aliyun.com/nexus/content/repositories/central/" }
@@ -27,6 +55,12 @@ dependencies {
     compile group: 'com.alibaba', name: 'fastjson', version: '1.2.58'
     // https://mvnrepository.com/artifact/commons-io/commons-io
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
+
+    // https://mvnrepository.com/artifact/com.alibaba/easyexcel
+    compile group: 'com.alibaba', name: 'easyexcel', version: '1.1.2-beta5'
+
+    // https://mvnrepository.com/artifact/org.jxls/jxls-jexcel
+    compile group: 'org.jxls', name: 'jxls-jexcel', version: '1.0.9'
 
 
     // FontAwesome (Bintray)

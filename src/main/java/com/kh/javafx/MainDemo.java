@@ -16,7 +16,6 @@ import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 
 public class MainDemo extends Application {
 
@@ -44,7 +43,7 @@ public class MainDemo extends Application {
         stage.setFullScreenExitKeyCombination(null);
 
         double width = 1000;
-        double height = 700;
+        double height = 2000;
         try {
             Rectangle2D bounds = Screen.getScreens().get(0).getBounds();
             width = bounds.getWidth() / 1.6;
