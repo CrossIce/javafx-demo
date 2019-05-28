@@ -290,8 +290,8 @@ public class TreeTableViewController {
             if (partList.size() > 0) {
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.setTitle("导出报价单");
-                fileChooser.setInitialFileName(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + "报价单.xlsx");
-                fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XLS Files", "*.xlsx"));
+                fileChooser.setInitialFileName(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + "报价单.xls");
+                fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XLS Files", "*.xls"));
                 File file = fileChooser.showSaveDialog(new Stage());
                 if (file != null) {
                     exportExcel(file.getAbsolutePath());
@@ -312,23 +312,33 @@ public class TreeTableViewController {
             }
         }));
 
-        File json = new File(TreeTableViewController.class.getResource("/options.json").getPath());
-        try {
-            String input = FileUtils.readFileToString(json, "UTF-8");
-            if (input != null && input.length() > 0) {
-                List<Option> tableData = JSONArray.parseArray(input, Option.class);
-                if (tableData != null) {
-                    optionFxes.addAll(tableData.stream().map(OptionFx::new).collect(Collectors.toList()));
+        File json = new File(System.getProperty("user.dir")+"/options.json");
+
+        if (json.exists()){
+            try {
+                String input = FileUtils.readFileToString(json, "UTF-8");
+                if (input != null && input.length() > 0) {
+                    List<Option> tableData = JSONArray.parseArray(input, Option.class);
+                    if (tableData != null) {
+                        optionFxes.addAll(tableData.stream().map(OptionFx::new).collect(Collectors.toList()));
+                    }
                 }
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            if (optionFxes.size() > 0) {
+                nameField.setItems(FXCollections.observableArrayList(optionFxes.stream().map(OptionFx::getName).collect(Collectors.toList())));
+            }
+        }else {
+            try {
+                json.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
-        if (optionFxes.size() > 0) {
-            nameField.setItems(FXCollections.observableArrayList(optionFxes.stream().map(OptionFx::getName).collect(Collectors.toList())));
-        }
 
     }
 
@@ -356,7 +366,7 @@ public class TreeTableViewController {
                 String json = JSON.toJSONString(optionFxes.stream().map(Option::new).collect(Collectors.toList()));
 
                 try {
-                    FileUtils.writeStringToFile(new File(TreeTableViewController.class.getResource("/options.json").getPath()), json, "utf-8", false);
+                    FileUtils.writeStringToFile(new File(System.getProperty("user.dir")+"/options.json"), json, "utf-8", false);
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -431,7 +441,7 @@ public class TreeTableViewController {
                 String json = JSON.toJSONString(optionFxes.stream().map(Option::new).collect(Collectors.toList()));
 
                 try {
-                    FileUtils.writeStringToFile(new File(TreeTableViewController.class.getResource("/options.json").getPath()), json, "utf-8", false);
+                    FileUtils.writeStringToFile(new File(System.getProperty("user.dir")+"/options.json"), json, "utf-8", false);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -656,6 +666,7 @@ public class TreeTableViewController {
 
             wwb.write();
             wwb.close();
+            out.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
